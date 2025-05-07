@@ -286,6 +286,28 @@ export const renderEditCards = async (req, res, next) => {
   }
 };
 
+export const renderAddCardForm = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { set } = await flashcardModel.getSetWithCards(id);
+
+    if (!set) {
+      return res.status(404).render('404', {
+        title: 'Not Found',
+        message: 'Flashcard deck not found'
+      });
+    }
+
+    res.render('add-card', {
+      title: `Add New Card to: ${set.title}`,
+      set,
+      currentPath: req.path
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const renderEditCardInDeck = async (req, res, next) => {
   try {
     const { id, cardId } = req.params;
@@ -320,12 +342,19 @@ export const addCardToDeck = async (req, res, next) => {
     
     const errors = validateFlashcardContent(term, definition);
     if (errors.length > 0) {
-      req.flash('error', errors.join(', '));
-      return res.redirect(`/edit/${id}`);
+      // Render the add-card view with errors and form data
+      const { set } = await flashcardModel.getSetWithCards(id);
+      return res.status(400).render('add-card', {
+        title: `Add New Card to: ${set.title}`,
+        set,
+        errorMessages: errors,
+        formData: { term, definition },
+        currentPath: req.path
+      });
     }
 
     await flashcardModel.createCards(id, [term], [definition]);
-    res.redirect(`/edit/${id}`);
+    res.redirect(`/edit/${id}/cards`);
   } catch (error) {
     next(error);
   }

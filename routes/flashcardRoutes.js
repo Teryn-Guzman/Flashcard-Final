@@ -13,6 +13,7 @@ import {
   renderEditCardInDeck,
   renderEditDeck,
   renderEditCards,
+  renderAddCardForm,
   addCardToDeck,
   deleteCardFromDeck,
   updateDeck,
@@ -41,6 +42,7 @@ router.post('/study/:id/delete/:cardId', deleteCard);
 router.get('/edit/:id', renderEditDeck);
 router.get('/edit/:id/cards', renderEditCards);
 router.get('/edit/:id/card/:cardId', renderEditCardInDeck);
+router.get('/edit/:id/add-card', renderAddCardForm);
 router.post('/add/:id/card', addCardToDeck);
 router.post('/delete/:id/card/:cardId', deleteCardFromDeck);
 router.post('/delete/:id', deleteDeck);

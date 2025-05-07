@@ -1,0 +1,40 @@
+<%- include('partials/header', { title: title, currentPath: currentPath }) %>
+
+<div class="form-container">
+  <h1 class="form-title">Add New Card to <%= set.title %></h1>
+
+  <form action="/add/<%= set.id %>/card" method="POST">
+    <div class="form-group">
+      <label for="term">Term</label>
+      <input type="text" id="term" name="term" class="form-control" value="<%= typeof formData !== 'undefined' ? formData.term : '' %>" required>
+      <% if (typeof errorMessages !== 'undefined') { %>
+        <% errorMessages.forEach(function(error) { %>
+          <% if (error.toLowerCase().includes('term')) { %>
+            <div style="color: red; font-size: 0.9rem; margin-top: 0.25rem;"><%= error %></div>
+          <% } %>
+        <% }); %>
+      <% } %>
+    </div>
+    <div class="form-group">
+      <label for="definition">Definition</label>
+      <textarea id="definition" name="definition" class="form-control" rows="4" required><%= typeof formData !== 'undefined' ? formData.definition : '' %></textarea>
+      <% if (typeof errorMessages !== 'undefined') { %>
+        <% errorMessages.forEach(function(error) { %>
+          <% if (error.toLowerCase().includes('definition')) { %>
+            <div style="color: red; font-size: 0.9rem; margin-top: 0.25rem;"><%= error %></div>
+          <% } %>
+        <% }); %>
+      <% } %>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">
+        <i class="fas fa-save"></i> Add Card
+      </button>
+      <a href="/edit/<%= set.id %>/cards" class="btn btn-secondary">
+        Cancel
+      </a>
+    </div>
+  </form>
+</div>
+
+<%- include('partials/footer') %>
