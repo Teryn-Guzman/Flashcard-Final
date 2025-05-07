@@ -1,0 +1,51 @@
+<%- include('partials/header', { title: 'Edit Flashcard' }) %>
+
+  <div class="form-container">
+    <h1 class="form-title">Edit Flashcard</h1>
+    
+  <% if (typeof error !== 'undefined') { %>
+    <div class="error-message"><%= error %></div>
+  <% } %>
+
+  <% if (typeof successMessage !== 'undefined') { %>
+    <div class="success-message"><%= successMessage %></div>
+  <% } %>
+
+  <div class="cards-list-sidebar">
+    <h3>Cards in Deck</h3>
+    <ul style="list-style-type: none; padding-left: 0;">
+      <% cards.forEach(cardItem => { %>
+        <li>
+          <form action="/edit/<%= card.set_id %>/card/<%= cardItem.id %>" method="GET" style="display:inline;">
+            <button type="submit" class="btn btn-link <%= cardItem.id === card.id ? 'active' : '' %>">
+              <%= cardItem.term %>
+            </button>
+          </form>
+        </li>
+      <% }); %>
+    </ul>
+  </div>
+  
+  <form action="/study/<%= card.set_id %>/update/<%= card.id %>" method="POST" class="edit-card-form">
+    <div class="form-group">
+      <label>Term</label>
+      <input type="text" name="term" class="form-control" value="<%= card.term %>" required>
+    </div>
+    
+    <div class="form-group">
+      <label>Definition</label>
+      <textarea name="definition" class="form-control" required><%= card.definition %></textarea>
+    </div>
+    
+    <div class="form-actions">
+      <a href="/decks" class="btn btn-secondary">
+        <i class="fas fa-times"></i> Cancel
+      </a>
+      <button type="submit" class="btn btn-primary">
+        <i class="fas fa-save"></i> Save Changes
+      </button>
+    </div>
+  </form>
+</div>
+
+<%- include('partials/footer') %>

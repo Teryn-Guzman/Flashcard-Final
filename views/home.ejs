@@ -1,0 +1,18 @@
+<%- include('partials/header', { title: 'Welcome', currentPath: '/' }) %>
+
+  <div class="welcome-container">
+    <div class="welcome-card">
+      <h1>Welcome to Studify</h1>
+      <p class="welcome-message">Your personal flashcard learning system</p>
+      <div class="welcome-actions">
+        <a href="/decks" class="btn btn-primary btn-lg">
+          <i class="fas fa-layer-group"></i> View All Decks
+        </a>
+        <a href="/create" class="btn btn-secondary btn-lg">
+          <i class="fas fa-plus"></i> Create New Deck
+        </a>
+      </div>
+    </div>
+  </div>
+
+<%- include('partials/footer') %>

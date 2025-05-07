@@ -1,0 +1,30 @@
+<%- include('partials/header', { title: title, currentPath: currentPath }) %>
+
+<div class="form-container">
+  <h1 class="form-title">Edit Cards for <%= set.title %></h1>
+
+  <% if (cards && cards.length > 0) { %>
+    <ul class="cards-list" style="list-style-type: none; padding-left: 0;">
+      <% cards.forEach(card => { %>
+        <li style="margin-bottom: 0.5rem;">
+          <a href="/edit/<%= set.id %>/card/<%= card.id %>" class="btn btn-link btn-sm">
+            Edit Card: <%= card.term %>
+          </a>
+        </li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p>No cards in this deck yet.</p>
+  <% } %>
+
+  <div class="deck-edit-actions">
+    <a href="/edit/<%= set.id %>" class="btn btn-secondary">
+      <i class="fas fa-arrow-left"></i> Back to Edit Deck
+    </a>
+    <a href="/decks" class="btn btn-secondary">
+      <i class="fas fa-arrow-left"></i> Back to Decks
+    </a>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

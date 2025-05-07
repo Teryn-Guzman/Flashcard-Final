@@ -1,0 +1,39 @@
+<%- include('partials/header', { title: 'Your Flashcard Decks', currentPath: '/decks' }) %>
+
+  <div class="header">
+    <h1>Your Flashcard Decks</h1>
+    <a href="/create" class="btn btn-primary">
+      <i class="fas fa-plus"></i> Create New Deck
+    </a>
+  </div>
+
+  <% if (sets.length === 0) { %>
+    <div class="empty-state">
+      <p>No flashcard decks yet. Create your first deck!</p>
+    </div>
+  <% } else { %>
+    <div class="sets-grid">
+      <% sets.forEach(set => { %>
+        <div class="set-card">
+          <h2 class="set-title"><%= set.title %></h2>
+          <% if (set.description) { %>
+            <p class="set-description"><%= set.description %></p>
+          <% } %>
+          <p class="set-meta"><%= set.card_count %> cards</p>
+          <div class="set-actions">
+            <a href="/study/<%= set.id %>" class="btn btn-primary btn-sm">
+              <i class="fas fa-book-open"></i> Study
+            </a>
+            <a href="/edit/<%= set.id %>" class="btn btn-secondary btn-sm">
+              <i class="fas fa-edit"></i> Edit Deck
+            </a>
+            <a href="/edit/<%= set.id %>/cards" class="btn btn-secondary btn-sm">
+              <i class="fas fa-edit"></i> Edit Cards
+            </a>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  <% } %>
+
+<%- include('partials/footer') %>

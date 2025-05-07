@@ -1,0 +1,63 @@
+<%- include('partials/header', { title: `Studying: ${set.title}`, currentPath: `/study/${set.id}` }) %>
+
+  <div class="study-header">
+    <h1 class="study-title"><%= set.title %></h1>
+    <% if (set.description) { %>
+      <p class="study-description"><%= set.description %></p>
+    <% } %>
+  </div>
+
+  <% if (cards.length === 0) { %>
+    <div class="empty-state">
+      <p>No cards in this deck yet.</p>
+      <a href="/decks" class="btn btn-primary mt-2">
+        <i class="fas fa-arrow-left"></i> Back to Decks
+      </a>
+    </div>
+  <% } else { %>
+    <div class="study-session">
+      <div class="flashcard <%= isFlipped ? 'flipped' : '' %>" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <div class="card-content">
+              <%= cards[currentCardIndex].term %>
+            </div>
+            <div class="flashcard-hint">Click to flip</div>
+          </div>
+          <div class="flashcard-back">
+            <div class="card-content">
+              <%= cards[currentCardIndex].definition %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="study-controls">
+        <form action="/study/<%= set.id %>/navigate?card=<%= currentCardIndex %>" method="POST">
+          <input type="hidden" name="direction" value="prev">
+          <button type="submit" class="btn btn-secondary" <%= currentCardIndex === 0 ? 'disabled' : '' %>>
+            <i class="fas fa-arrow-left"></i> Previous
+          </button>
+        </form>
+        
+        <span class="card-counter">
+          Card <%= currentCardIndex + 1 %> of <%= cards.length %>
+        </span>
+
+        <form action="/study/<%= set.id %>/navigate?card=<%= currentCardIndex %>" method="POST">
+          <input type="hidden" name="direction" value="next">
+          <button type="submit" class="btn btn-secondary" <%= currentCardIndex === cards.length - 1 ? 'disabled' : '' %>>
+            Next <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  <% } %>
+
+  <div class="study-actions">
+    <a href="/decks" class="btn btn-primary">
+      <i class="fas fa-arrow-left"></i> Back to Decks
+    </a>
+  </div>
+
+<%- include('partials/footer') %>
